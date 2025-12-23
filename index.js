@@ -35,6 +35,7 @@ async function run() {
     await client.connect();
 
       const jobsCollection = client.db('careerCodeDB25').collection('jobs');
+      const applicationCollection = client.db('careerCodeDB25').collection('applications');
 
 
       app.get('/jobs', async(req, res)=>{
@@ -47,6 +48,14 @@ async function run() {
             const query ={_id : new ObjectId(id)}
             const result = await jobsCollection.findOne(query);
             res.send(result)
+      })
+
+
+      // Application related Apis
+      app.post('/applications', async(req, res)=>{
+        const application = req.body;
+        const result = await applicationCollection.insertOne(application);
+        res.send(result)
       })
 
     // Send a ping to confirm a successful connection
