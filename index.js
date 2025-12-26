@@ -37,12 +37,31 @@ async function run() {
       const jobsCollection = client.db('careerCodeDB25').collection('jobs');
       const applicationCollection = client.db('careerCodeDB25').collection('applications');
 
+    // jobs related api
+     app.post('/jobs', async(req, res)=>{
+        const newJob = req.body;
+        const result = await jobsCollection.insertOne(newJob);
+        res.send(result)
+      });
 
       app.get('/jobs', async(req, res)=>{
-            const cursor = jobsCollection.find();
+
+           const email = req.query.email;
+
+           const query ={};
+
+           if(email){
+              query.hr_email = email;
+           }
+
+            const cursor = jobsCollection.find(query);
             const result = await cursor.toArray();
             res.send(result)
-      })
+      });
+
+      // could be Done
+
+
       app.get('/jobs/:id', async(req, res)=>{
             const id = req.params.id;
             const query ={_id : new ObjectId(id)}
@@ -52,7 +71,6 @@ async function run() {
 
 
       // Application related Apis
-     
 
       app.get('/applications', async(req, res)=>{
         const email = req.query.email;
@@ -71,6 +89,14 @@ async function run() {
           application.company_logo = job.company_logo
         }
 
+        res.send(result)
+      });
+
+      // jobId diye applications collection er koyta job application hoyese
+      app.get('/applications/job/:job_id', async(req, res)=>{
+        const job_id = req.params.job_id;
+        const query ={jobId : job_id};
+        const result = await applicationCollection.find(query).toArray();
         res.send(result)
       })
 
