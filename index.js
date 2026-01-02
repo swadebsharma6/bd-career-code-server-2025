@@ -123,20 +123,20 @@ async function run() {
       .collection("applications");
 
     // jwt token related Api
-    app.post("/jwt", async (req, res) => {
-      const userData = req.body;
-      const token = jwt.sign(userData, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
+    // app.post("/jwt", async (req, res) => {
+    //   const userData = req.body;
+    //   const token = jwt.sign(userData, process.env.JWT_SECRET, {
+    //     expiresIn: "1h",
+    //   });
 
-      //set token in cookie
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: false,
-      });
+    //   //set token in cookie
+    //   res.cookie("token", token, {
+    //     httpOnly: true,
+    //     secure: false,
+    //   });
 
-      res.send({ success: true });
-    });
+    //   res.send({ success: true });
+    // });
 
     // jobs related api
     app.post("/jobs", async (req, res) => {
