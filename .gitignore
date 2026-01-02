@@ -1,0 +1,4 @@
+node_modules
+.env
+.vercel
+bd-career-code-2025-firebase-admin-key.json
